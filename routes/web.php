@@ -26,5 +26,25 @@ Route::get('/IndexCategory/','Category@indexCategory')
 Route::get('/IndexNews/{id}','NewsOfCategory@indexNews')
     ->where ('id', '\d+')
     ->name('News');
+Route::get('/ShowNew/{id_news}','ShowNew@ShowOneNew')
+    ->name('OneNew');
+
 Route::get('/AddNews/','AddNewNews@AddNews')
     ->name('AddNews');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+/*
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+ttt
+Route::get('/home', 'HomeController@index')->name('home');*/

@@ -13,7 +13,8 @@ class NewsOfCategory extends Controller
         return view('IndexNews',
             [
                 'IndexNews' => Controller::ReturnNews($id_category),
-                'Category' => Controller::ReturnOneCategory($id_category)
+                'Category' => Controller::ReturnOneCategory($id_category),
+                'categories' => $this->category
             ]);
     }
 }
