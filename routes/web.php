@@ -28,6 +28,18 @@ Route::get('/IndexNews/{id}','NewsOfCategory@indexNews')
     ->name('News');
 Route::get('/ShowNew/{id_news}','ShowNew@ShowOneNew')
     ->name('OneNew');
+Route::post('/news/store/','Admin\NewsController@store')
+    ->name('admin.news.store');
+Route::get('/news/feedback/','FeedbackController@index')
+    ->name('feedback');
+Route::post('/news/feedback/save','FeedbackController@save')
+    ->name('feedbackSave');
+
+// Запросы от пользователей
+Route::get('/news/userRequest/','userRequestController@index')
+    ->name('userRequest');
+Route::post('/news/userRequest/save','userRequestController@save')
+    ->name('userRequest.save');
 
 Route::get('/AddNews/','AddNewNews@AddNews')
     ->name('AddNews');
