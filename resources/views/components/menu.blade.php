@@ -1,12 +1,12 @@
 <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-        @foreach($categories as $category)
+        @foreach(getCategories() as $category)
             <a class="p-2 text-muted" href="{{route('News',
             [
-            'id'=> $category['id'],
-            'Category'=>$category['Category']
+            'id'=> $category->id,
+            'Category'=>$category->Category
             ]
-            )}}">{{ $category['Category'] }}</a>
+            )}}">{{ $category->Category }}</a>
 
 
         @endforeach
