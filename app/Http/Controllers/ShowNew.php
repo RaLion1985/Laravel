@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class ShowNew extends Controller
@@ -14,8 +14,8 @@ class ShowNew extends Controller
         return view('ShowNew',
             [
                 'new' => Controller::ReturnOneNew($id_new),
-                'Category' => Controller::ReturnOneCategory($id_category),
-                'categories' => $this->category
+                'Categories' => Categories::find($id_category),
+                'categories' => Categories::all()
             ]);
     }
 }

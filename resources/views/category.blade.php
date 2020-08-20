@@ -1,7 +1,7 @@
 @extends ('layouts.index')
 @section ('content')
-    <h2>{!! $Category->Category !!} </h2>
-    @forelse($IndexNews as $n)
+    <h2>{!! $category->Category !!} </h2>
+    @forelse($category->news as $n)
         <div class="blog-post">
 
             <a href="{{route('OneNew',

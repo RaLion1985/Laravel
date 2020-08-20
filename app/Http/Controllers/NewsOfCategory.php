@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class NewsOfCategory extends Controller
@@ -13,8 +13,8 @@ class NewsOfCategory extends Controller
         return view('IndexNews',
             [
                 'IndexNews' => Controller::ReturnNews($id_category),
-                'Category' => Controller::ReturnOneCategory($id_category),
-                'categories' => $this->category
+                'Category' => Categories::find($id_category),
+                'categories' => Categories::all()
             ]);
     }
 }

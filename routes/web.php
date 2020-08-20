@@ -16,13 +16,17 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+
+Route::get ('/category/{category}','Category@show')
+    ->name('category');
+
 Route::get ('/hello/{name}', function (string $name) {
 	return "Hello, " . $name;
 });
 Route::get('/','WelcomeController@index')
     ->name('Welcome');
-Route::get('/IndexCategory/','Category@indexCategory')
-    ->name('Category');
+Route::get('/IndexCategory/','Categories@indexCategory')
+    ->name('Categories');
 Route::get('/IndexNews/{id}','NewsOfCategory@indexNews')
     ->where ('id', '\d+')
     ->name('News');
@@ -34,6 +38,21 @@ Route::get('/news/feedback/','FeedbackController@index')
     ->name('feedback');
 Route::post('/news/feedback/save','FeedbackController@save')
     ->name('feedbackSave');
+// Админка
+Route::group(['prefix'=>'admin'],function ()
+{
+    Route::get('/','Admin\IndexController@index')->name('admin');
+    // news
+    Route::resource('/news','Admin\NewsController');
+
+});
+Route::group(['prefix'=>'admin'],function ()
+{
+    Route::resource('/categories','Admin\CategoriesController');
+}
+);
+//Route::get('/admin','Admin\NewsController@index') ->name('admin.news.index');
+
 
 // Запросы от пользователей
 Route::get('/news/userRequest/','userRequestController@index')
@@ -48,6 +67,23 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Collections
+Route::get('/collections',function ()
+{
+   $collection =  collect(
+       [
+          100,
+          200,
+          500,
+          10000
+       ]);
+   //dd($collection->min());
+    dd($collection->map(function ($item){
+        return $item*4;
+    }));
+}
+);
+//
 /*
 Auth::routes();
 

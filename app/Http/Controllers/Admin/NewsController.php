@@ -3,41 +3,103 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NewsCreateRequest;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function store(NewsCreateRequest $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        //dd($request->only('title','id'));
-        //dd($request->except('_token','id'));
-        //$title=$request->input('title');
-        //$title=$request->has('titles');
-        //$title=$request->method();
-        //$title=$request->url();
+        $newList=News::paginate(5);
+        return view ('admin.news.index',['newsList'=>$newList]);
+    }
 
-        $data= $request->only('id','title','text');
-        $saveFile=function (array $data)
-        {
-            $responseData=[];
-            $fileNews=storage_path('app/news.txt');
-            if(file_exists($fileNews))
-            {
-                $file=file_get_contents($fileNews);
-                $response=json_decode($file,true);
-            }
-            //$responseData=array_merge($responseData,$data);
-            $responseData[]=$data;
-            if(isset($response) && !empty($response))
-            {
-                $r=array_merge($response,$responseData);
-            } else {
-                $r=$responseData;
-            }
-            file_put_contents($fileNews,json_encode($r));
-        };
-        $saveFile($data);
-        return redirect()->route('Welcome')->with('success','Новость успешно добавлена');
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view ('admin.news.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //dd($request->all());
+        $data = $request->only(['img','title','news']);
+        $news=News::create($data);
+        if ($news) {
+            return redirect()->route('news.index')->with('success','Новость успешно добавлена');
+        }
+        return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function show(News $news)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(News $news)
+    {
+        return view ('admin.news.edit',['news'=>$news]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, News $news)
+    {
+        $news->img   = $request->input('img');
+        $news->title = $request->input('title');
+        $news->news = $request->input('news');
+        if ($news->save()) {
+            return redirect()->route('news.index')->with('success','Новость успешно обновлена');
+        }
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\News  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(News $news)
+    {
+
+        return view ('admin.news.destroy',['news'=>$news]);
+        /*$news=News::destroy();
+        dd($news);
+        return redirect()->route('news.index')->with('success','Новость успешно удалена');*/
+
+
     }
 }

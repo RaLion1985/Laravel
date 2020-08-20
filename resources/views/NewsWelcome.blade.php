@@ -1,7 +1,9 @@
 @extends ('layouts.index')
 @section ('content')
 
-
+    <div class="blog-post">
+        <h4 class="blog-post-title"><a href="{{route('admin')}}">В админку</a></h4>
+    </div>
     <div class="blog-post">
         <h4 class="blog-post-title"><a href="{{route('AddNews')}}">Добавить новость</a></h4>
     </div>

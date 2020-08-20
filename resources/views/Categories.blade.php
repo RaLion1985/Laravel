@@ -2,7 +2,7 @@
 @section ('content')
     @foreach ($name as $n)
     <div class="blog-post">
-        <h4><a href="<?=route('News',['id'=> $n['id']])?>"><?=$n['Category'] ?></a></h4>
+        <h4><a href="<?=route('News',['id'=> $n['id']])?>"><?=$n['Categories'] ?></a></h4>
     </div>
     @endforeach
 

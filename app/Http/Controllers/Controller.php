@@ -11,29 +11,29 @@ use function GuzzleHttp\Psr7\str;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    protected $category =
+    /*protected $category =
     [
         [
           'id' => 1,
-          'Category' => 'Главные события'
+          'Categories' => 'Главные события'
         ],
         [
           'id' => 2,
-          'Category' => 'События планетарного масштаба'
+          'Categories' => 'События планетарного масштаба'
         ],
         [
           'id' => 3,
-          'Category' => 'Региональные события'
+          'Categories' => 'Региональные события'
         ],
         [
           'id' => 4,
-          'Category' => 'Научные достижения'
+          'Categories' => 'Научные достижения'
         ],
         [
             'id' => 5,
-            'Category' => 'Криминальная сводка'
+            'Categories' => 'Криминальная сводка'
         ],
-    ];
+    ];*/
     protected $news =
         [
             // 1 категория Главные события
@@ -166,7 +166,7 @@ class Controller extends BaseController
     {
         /*$arr=[];
         foreach ($this->category as $item) {
-            array_push($arr,$item['Category']);
+            array_push($arr,$item['Categories']);
         }
         return $arr;*/
         return $this->category;
@@ -175,7 +175,7 @@ class Controller extends BaseController
         $strCategory = "";
         foreach ($this->category as $item)
         {
-            if ($item['id'] == $id) {$strCategory=$item['Category'];}
+            if ($item['id'] == $id) {$strCategory=$item['Categories'];}
         }
         return $strCategory;
     }

@@ -21,7 +21,7 @@ class CategoriesSeeder extends Seeder
         {
             $data[]=
                 [
-                    'Category' =>$faker->sentence(mt_rand(6,10)),
+                    'Categories' =>$faker->sentence(mt_rand(6,10)),
                      'Category_description'=>$faker->realText(mt_rand(30,100))
                 ];
 

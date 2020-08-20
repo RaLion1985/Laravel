@@ -1,6 +1,8 @@
 <?php
 if (!function_exists('getCategories')) {
-    function getCategories():array {
-        return (new \App\Models\Category())->getAll();
+    function getCategories() {
+        $categories= \App\Models\Categories::with('news')->get();
+        //dd($categories);
+        return ($categories);
     }
 }

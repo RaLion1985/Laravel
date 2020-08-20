@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -19,13 +20,13 @@ class WelcomeController extends Controller
             }
         }
         //dd($news);
-        $route1=route('Category');
+        $route1=route('Categories');
         $text1= "<a href='" . $route1."'>Посмотреть все категории новостей 2</a>";
         $text2 = route('AddNews');
         return view('NewsWelcome',
             [
                 'news'=>$news,
-                'categories'=>$this->category,
+                'categories'=>Categories::all(),
             ]);
     }
 
