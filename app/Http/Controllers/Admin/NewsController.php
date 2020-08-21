@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsCreateRequest;
 use App\Models\News;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -32,18 +34,41 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param NewsCreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    //public function store(Request $request)
+    public function store(NewsCreateRequest $request)
     {
         //dd($request->all());
-        $data = $request->only(['img','title','news']);
-        $news=News::create($data);
-        if ($news) {
-            return redirect()->route('news.index')->with('success','Новость успешно добавлена');
-        }
-        return back();
+       // try {
+         /*   $request->validate(
+                [
+                    'img'   => 'required|url',
+                    'title' => 'required|string|min:5|max:255',
+                    'news'  => 'sometimes|string'
+                ]
+
+
+                );*/
+            /*$this->validate($request, [
+                'img' => 'required|url',
+                'title' => 'required|string|min:5|max:255',
+                'news' => 'sometimes|string'
+            ]
+            );*/
+
+            //$data = $request->only(['img', 'title', 'news']);
+            $data = $request->validated();
+            $news = News::create($data);
+            if ($news) {
+                return redirect()->route('news.index')->with('success', trans('messages.admin.news.store.success'));
+            }
+            return back()->with('error', trans('messages.admin.news.store.error'));
+            /*} catch (\Illuminate\Validation\ValidationException $e) {
+            $all = $e->validator->getMessageBag()->all();
+            dd($all);*/
+
     }
 
     /**

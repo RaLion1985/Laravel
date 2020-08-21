@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoriesCreateRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 
@@ -35,9 +36,9 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriesCreateRequest $request)
     {
-        $data = $request->only(['Category','Category_description']);
+        $data = $request->validated();
         $news=Categories::create($data);
         if ($news) {
             return redirect()->route('categories.index')->with('success','Категория успешно добавлена');
@@ -74,8 +75,9 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categories $category)
+    public function update(CategoriesCreateRequest $request, Categories $category)
     {
+        $data = $request->validated();
         $category->Category   = $request->input('Category');
         $category->Category_description = $request->input('Category_description');
 

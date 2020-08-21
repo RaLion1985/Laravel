@@ -6,11 +6,29 @@
 
         <form method="post" action="{{route('categories.store')}}">
             @csrf
-            <p><input type="text" class="form-control" name="Category" placeholder="Заголовок" value="{{old('Category')}}">
-                @error('Category') Заполните это поле @enderror </p>
-            <p><textarea class="form-control" name="Category_description" placeholder="Текст">{{old('Category_description')}}</textarea></p>
-            <button type="submit" class="btn btn-success">Добавить категорию</button>
+            <div>
+                <input type="text" class="form-control" name="Category" placeholder="Заголовок" value="{{old('Category')}}">
+                @error('Category')
+                        <div class="aleret alert-danger">
+                        @foreach($errors->get('Category') as $Error)
+                            <p>{{$Error}}</p>
+                        @endforeach
+                        </div>
+                @enderror
+            </div>
+            <div>
+                <textarea class="form-control" name="Category_description" placeholder="Текст">{{old('Category_description')}}</textarea>
+                @error('Category_description')
+                    <div class="aleret alert-danger">
+                        @foreach($errors->get('Category_description') as $Error)
+                            <p>{{$Error}}</p>
+                        @endforeach
+                    </div>
+                @enderror
+                </div>
 
+            <button type="submit" class="btn btn-success">Добавить категорию</button>
+        </form>
     </div>
     <br>
     <nav class="blog-pagination">
