@@ -39,18 +39,29 @@ Route::get('/news/feedback/','FeedbackController@index')
 Route::post('/news/feedback/save','FeedbackController@save')
     ->name('feedbackSave');
 // Админка
-Route::group(['prefix'=>'admin'],function ()
-{
-    Route::get('/','Admin\IndexController@index')->name('admin');
-    // news
-    Route::resource('/news','Admin\NewsController');
+Route::group(['middleware'=>'auth'],function () {
+    Route::get('/account','Account\IndexController@index')
+        ->name('account');
+    Route::group(['prefix'=>'Accounts'],function () {
+        Route::resource('/user','Accounts\UserController');
+    });
+
+
+    Route::group(['prefix' => 'admin','middleware'=>'admin'], function () {
+        Route::get('/', 'Admin\IndexController@index')->name('admin');
+        // news
+        Route::resource('/news', 'Admin\NewsController');
+
+    });
 
 });
-Route::group(['prefix'=>'admin'],function ()
-{
-    Route::resource('/categories','Admin\CategoriesController');
-}
-);
+
+    Route::group(['prefix'=>'admin'],function ()
+        {
+            Route::resource('/categories','Admin\CategoriesController');
+        }
+    );
+
 //Route::get('/admin','Admin\NewsController@index') ->name('admin.news.index');
 
 
@@ -81,8 +92,16 @@ Route::get('/collections',function ()
     dd($collection->map(function ($item){
         return $item*4;
     }));
-}
-);
+});
+
+ROute::get ('/session/',function (){
+    if(session()->has('test')) {
+        dd(session()->get('test'));
+    }
+    session(['test'=>'My session']);
+    return redirect('/session');
+});
+
 //
 /*
 Auth::routes();
