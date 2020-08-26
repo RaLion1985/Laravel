@@ -10,6 +10,7 @@
     @if (session()->has('error'))
         <h1 style="color:red;"> {{ session()->get('error') }}</h1>
     @endif
+    <img src = "{{$user->avatar}}">
     <hr>
     <h1>Данные пользователя</h1>
     <form method="post" action="{{route('user.update',['user'=>$user])}}">

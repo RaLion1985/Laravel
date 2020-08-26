@@ -93,7 +93,10 @@ Route::get('/collections',function ()
         return $item*4;
     }));
 });
-
+Route::get('/parsing/news','ParserController@index')
+    ->name('news.parser');
+Route::get('/parsing/news/army','ParserController@army')
+    ->name('news.army.parser');
 ROute::get ('/session/',function (){
     if(session()->has('test')) {
         dd(session()->get('test'));
@@ -101,7 +104,9 @@ ROute::get ('/session/',function (){
     session(['test'=>'My session']);
     return redirect('/session');
 });
-
+// auth social
+Route::get('/auth/vk','Auth\SocialController@loginVK')->name('vk.login');
+Route::get('/auth/vk/callback','Auth\SocialController@callbackVK')->name('vk.callback');
 //
 /*
 Auth::routes();

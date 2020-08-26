@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use voku\helper\ASCII;
+
+
 
 class User extends Authenticatable
 {
@@ -16,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','phone' ,'email', 'password',
+        'name','phone' ,'email', 'password','last_login','avatar'
     ];
 
     /**
@@ -36,4 +40,36 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function createOrUpdateUserWithSocialite(array $data)
+    {
+        $user = self::where('email', $data['email'])->first();
+        if (!$user)
+        {
+            $password= '12345678';
+            $user = self::create ([
+               'name'=> $data['name'],
+               'email'=> $data['email'],
+               'phone'=>'9999999',
+               'password'=> Hash::make($password),
+                'avatar'=> $data['avatar'],
+            ]);
+            if ($user)
+            {
+                \Auth::loginUsingId($user->id);
+                return $user;
+            }
+        }
+        else
+            {
+               $check= $user->update($data);
+                if ($check) {
+                    \Auth::loginUsingId($user->id);
+                    return $user;
+                }
+            }
+        return false;
+    }
 }
